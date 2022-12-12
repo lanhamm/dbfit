@@ -74,8 +74,8 @@ public class DatabaseTest extends Fixture {
     public Fixture query(String query) {
         return new dbfit.fixture.Query(environment, query);
     }
-    public Fixture queryCommonTableExpressionFromView(String view, String query) throws SQLException, NoMatchingRowFoundException {
-        return new dbfit.fixture.QueryCommonTableExpressionFromView(environment, view, query);
+    public Fixture queryCommonTableExpressionFromView(String view, String query, String userName) throws SQLException, NoMatchingRowFoundException {
+        return new dbfit.fixture.QueryCommonTableExpressionFromView(environment, view, query, userName);
     }
 
     public Fixture orderedQuery(String query) {
