@@ -1,20 +1,26 @@
 package dbfit.fixture;
 
 import dbfit.api.DBEnvironment;
-import dbfit.util.NoMatchingRowFoundException;
-import org.apache.commons.lang3.StringUtils;
+import dbfit.api.DbEnvironmentFactory;
+import dbfit.util.*;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class QueryCommonTableExpressionFromView extends Query {
+import static dbfit.util.SymbolUtil.isSymbolGetter;
 
-    public QueryCommonTableExpressionFromView(DBEnvironment environment, String view, String queryForCommonTableExpression, String userName) throws SQLException, NoMatchingRowFoundException {
-        super(environment,null);
-        Query viewTableQuery = new Query(environment,"select DBMS_METADATA.GET_DDL('VIEW','" + view + "','" + userName + "') text from dual");
-        String finalQueryExpression = viewTableQuery.getDataTable().findFirstUnprocessedRow().getStringValue("text");
-        finalQueryExpression = "with " + StringUtils.substringAfter(finalQueryExpression,"with");
-        finalQueryExpression = finalQueryExpression.replace("--FINAL SELECT",", final_select as (") + ") " + queryForCommonTableExpression;
-        super.setQueryOrSymbol(finalQueryExpression);
+public class QueryCommonTableExpressionFromView extends Query {
+	private String queryOrSymbol;
+	private String view;
+
+    public QueryCommonTableExpressionFromView() {
+    	super();
+    }
+    
+    public QueryCommonTableExpressionFromView(DBEnvironment environment, String view, String queryOrSymbol) {
+    	super(environment, queryOrSymbol);
     }
 
 }
+

@@ -30,10 +30,6 @@ public class Query extends RowSetFixture {
         this.isOrdered = isOrdered;
     }
 
-    public void setQueryOrSymbol(String queryOrSymbol) {
-        this.queryOrSymbol = queryOrSymbol;
-    }
-
     public MatchableDataTable getDataTable() throws SQLException {
         if (queryOrSymbol == null) {
             queryOrSymbol = args[0];
